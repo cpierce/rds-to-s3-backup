@@ -1,6 +1,6 @@
 #!/bin/bash
 BACKUP_DATE=$(date +"%Y-%m-%d")
-BACKUP_OPTIONS="--rr"
+BACKUP_OPTIONS=""
 BACKUP_S3PATH='s3://bucketname/folder'
 for db in $(mysql -N -s -r -e 'show databases' | grep -v information_schema | grep -v performance_schema | grep -v mysql | grep -v innodb); do
 	echo "Creating DB Backup: $db"
