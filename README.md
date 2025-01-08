@@ -14,17 +14,32 @@ This install assumes you are on an amazon ec2 instance running ubuntu.
 If this is not the case you may use this as a guide to install via your
 favorite flavor of Linux.
 
-- `$ sudo apt install -y s3cmd`
-- `$ sudo apt install -y mysql-client`
+1. Install **s3cmd** for managing backups on Amazon S3:
+```bash
+sudo apt update
+sudo apt install -y s3cmd
+```
+
+2. Install the **MySQL Client** for database management and backup (if needed)
+```bash
+sudo apt update
+sudo apt install -y mysql-client
+```
+
+3. Install the **pgSQL Client** for database management and backup (if needed)
+```bash
+sudo apt update
+sudo apt install -y postgresql-client
+```
 
 ## Configuration
 
 First get your EC2 to connect by default to the RDS.  This can be done with a
-simple file placed at `~/.my.cnf`.  A sample of this file is located in the
+simple file placed at `~/.my.cnf` or `~/.pgpass`.  A sample of this file is located in the
 samples folder in this git repo.  After this is done configure your s3cmd
 using `s3cmd --configure`.  You will need your IAM info for s3 at this point.
 
-Last edit the rdstos3backup.sh script and edit the top few lines to suite your
+Last edit the rdstos3backup.sh (or rdspgtos3backup.sh (or both)) script and edit the top few lines to suite your
 needs.  Fix to suite your needs and then save the file in
 `/usr/local/bin/`.
 
@@ -35,4 +50,5 @@ You can achieve this by using the folllowing crontab:
 
 ```
 *    3    *    *    *   /usr/local/bin/rdstos3backup.sh 1>/dev/null >&2
+*    4    *    *    *   /usr/local/bin/rdspgtos3backup.sh 1>/dev/null >&2
 ```
